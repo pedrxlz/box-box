@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <style>
+      form {
+        border: 3px solid #f1f1f1;
+        padding: 20px;
+        width: 50%;
+        margin: auto;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #afafaf;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+
+      .container {
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST">
+      <div class="container">
+        <label for="username"><b>Login</b></label>
+        <input
+          type="text"
+          placeholder="Digite seu login"
+          name="username"
+          required
+        />
+
+        <label for="password"><b>Senha</b></label>
+        <input
+          type="password"
+          placeholder="Digite sua senha"
+          name="pass"
+          required
+        />
+
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </body>
+</html>

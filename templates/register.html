@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar</title>
+    <style>
+      form {
+        border: 3px solid #f1f1f1;
+        padding: 20px;
+        width: 50%;
+        margin: auto;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #afafaf;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+
+      .container {
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST">
+      <label for="username">Nome:</label>
+      <input type="text" id="name" name="name" /><br />
+
+      <label for="username">Login:</label>
+      <input type="text" id="username" name="username" /><br />
+
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="pass" /><br />
+
+      <button type="submit">Registrar</button>
+    </form>
+  </body>
+</html>
