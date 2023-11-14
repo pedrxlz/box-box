@@ -10,8 +10,12 @@ app.secret_key = "xmqwoidmwqo"
 
 @app.route('/', methods=['GET'])
 def index():
-    if 'username' in session:
-        return render_template('index.html', username=session['username'])
+    isLoggedIn = 'username' in session
+    
+    if isLoggedIn:
+        products = connection.get_produto()
+        
+        return render_template('index.html', username=session['username'], products=products)
 
     return redirect(url_for('login'))
 
@@ -42,6 +46,7 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
