@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from flask import Flask, redirect, render_template, request, session, url_for
 
 from banco import Connection
@@ -6,7 +7,6 @@ connection = Connection()
 
 app = Flask(__name__)
 app.secret_key = "xmqwoidmwqo"  
-
 
 @app.route('/', methods=['GET'])
 def index():
@@ -47,6 +47,51 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+@app.route('/product/new', methods=['POST', 'GET'])
+def add():
+    if request.method == 'POST':
+        new_produto = {
+            'armazem': ObjectId(request.form['storage']),
+            'categoria': ObjectId(request.form['category']),
+            'nome': request.form['name'],
+            'preco': request.form['price'],
+            'quantidade': request.form['quantity'],
+        }
+        
+        connection.post_produto(new_produto)
+        
+        return redirect(url_for('index'))
+    return render_template('new_product.html', categories=connection.get_categoria(), storages=connection.get_armazem())
+
+@app.route('/product/<id>/delete', methods=['GET'])
+def delete(id):
+    connection.delete_produto(id)
+    return redirect(url_for('index'))
+
+@app.route('/category/new', methods=['POST', 'GET'])
+def add_category():
+    if request.method == 'POST':
+        new_categoria = {
+            'nome': request.form['name']
+        }
+        
+        connection.post_categoria(new_categoria)
+        
+        return redirect(url_for('index'))
+    return render_template('new_category.html')
+
+@app.route('/storage/new', methods=['POST', 'GET'])
+def add_storage():
+    if request.method == 'POST':
+        new_armazem = {
+            'nome': request.form['name'],
+            "endereco": request.form['address']
+        }
+        
+        connection.post_armazem(new_armazem)
+        
+        return redirect(url_for('index'))
+    return render_template('new_storage.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

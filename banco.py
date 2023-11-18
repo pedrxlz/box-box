@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -11,15 +12,45 @@ class Connection():
         response = self.db['armazem'].find()
         response_builder = [ data for data in response ]
         return response_builder
+    
+    def get_armazem_by_id(self, id) -> list:
+        response = self.db['armazem'].find_one({'_id': ObjectId(id)})
+        return response
+    
+    def post_armazem(self, armazem):
+        result = self.db['armazem'].insert_one(armazem)
+
+        if result.inserted_id:
+            return f"O armazem foi inserido com o ID {result.inserted_id}"
+        else:
+            return "Falha ao adicionar o armazem"
 
     def get_categoria(self) -> list:
         response = self.db['categoria'].find()
         response_builder = [ data for data in response ]
         return response_builder
     
+    def get_categoria_by_id(self, id) -> list:
+        response = self.db['categoria'].find_one({'_id': ObjectId(id)})
+        return response
+    
+    def post_categoria(self, categoria):
+        result = self.db['categoria'].insert_one(categoria)
+
+        if result.inserted_id:
+            return f"A categoria foi inserida com o ID {result.inserted_id}"
+        else:
+            return "Falha ao adicionar a categoria"
+        
+    
     def get_produto(self) -> list:
         response = self.db['produto'].find()
         response_builder = [ data for data in response ]
+        
+        for data in response_builder:
+            data['armazem'] = self.get_armazem_by_id(data['armazem'])['nome']
+            data['categoria'] = self.get_categoria_by_id(data['categoria'])['nome']
+        
         return response_builder
     
     def get_usuario(self) -> list:
@@ -34,6 +65,13 @@ class Connection():
             return f"O produto foi inserido com o ID {result.inserted_id}"
         else:
             return "Falha ao adicionar o produto"
+    def delete_produto(self, id):
+        result = self.db['produto'].delete_one({'_id': ObjectId(id)})
+        
+        if result.deleted_count:
+            return f"O produto foi deletado com sucesso"
+        else:
+            return "Falha ao deletar o produto"
     
 
     # METODOS DESTINADOS A TABLE PRODUTO

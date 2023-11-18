@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nova Categoria</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+          }
+
+          form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          }
+
+          label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+          }
+
+          input,
+          select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+          }
+
+          input[type="submit"] {
+            background-color: #afafaf;
+            color: white;
+            cursor: pointer;
+          }
+
+          input[type="submit"]:hover {
+            opacity: 0.8;
+          }
+        </style>
+      </head>
+      <body>
+        <form method="POST">
+          <label for="name">Nome:</label>
+          <input type="text" id="name" name="name" required /><br /><br />
+
+          <br /><br />
+
+          <input type="submit" value="Criar" />
+        </form>
+      </body>
+    </html>
+  </head>
+</html>
