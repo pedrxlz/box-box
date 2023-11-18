@@ -22,9 +22,11 @@ def login_required(f):
 @app.route('/', methods=['GET'])
 @login_required
 def index():
-    quantity, filter = request.args.get('quantity'), request.args.get('filter') 
-        
     products = connection.get_produto()
+    
+    get_filter = lambda : (lambda : (request.args.get('quantity'), request.args.get('filter')))
+    
+    quantity, filter = get_filter()()
     
     if quantity and filter:
         if filter == 'greater':
