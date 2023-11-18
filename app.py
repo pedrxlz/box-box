@@ -22,8 +22,17 @@ def login_required(f):
 @app.route('/', methods=['GET'])
 @login_required
 def index():
-    products = connection.get_produto()
+    quantity, filter = request.args.get('quantity'), request.args.get('filter') 
         
+    products = connection.get_produto()
+    
+    if quantity and filter:
+        if filter == 'greater':
+            products = connection.filter_by_quantity_greater_than(products, int(quantity))
+        elif filter == 'lesser':
+            products = connection.filter_by_quantity_lesser_than(products, int(quantity))
+      
+
     return render_template('index.html', username=session['username'], products=products)
 
 
@@ -64,8 +73,8 @@ def add():
             'armazem': ObjectId(request.form['storage']),
             'categoria': ObjectId(request.form['category']),
             'nome': request.form['name'],
-            'preco': request.form['price'],
-            'quantidade': request.form['quantity'],
+            'preco': int(request.form['price']),
+            'quantidade': int(request.form['quantity']),
         }
         
         connection.post_produto(new_produto)

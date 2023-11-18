@@ -7,9 +7,42 @@
         font-family: Arial, sans-serif;
         background-color: #f2f2f2;
       }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      #logout {
+        background-color: #333333a8;
+        color: #fff;
+        padding: 10px;
+        text-decoration: none;
+      }
+
+      nav {
+        margin: 20px 0;
+      }
+
+      nav a {
+        display: inline-block;
+        padding: 10px;
+        background-color: #333333a8;
+        color: #fff;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      .filter-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
       h1 {
         color: #333;
-        text-align: center;
       }
       table {
         border-collapse: collapse;
@@ -36,45 +69,63 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 10px;
+        padding: 20px 0;
       }
     </style>
   </head>
   <body>
-    <header class="header">
-      <h1>Bem vindo (a)! {{ username }}</h1>
-      {% if username %}
-      <a href="/logout">Sair</a>
-      {% endif %}
-    </header>
+    <div class="container">
+      <header class="header">
+        <h1>Bem vindo (a)! {{ username }}</h1>
+        {% if username %}
+        <a id="logout" href="/logout">Sair</a>
+        {% endif %}
+      </header>
 
-    <a href="/product/new">Novo Produto</a>
-    <a href="/storage/new">Novo Armazém</a>
-    <a href="/category/new">Nova Categoria</a>
+      <nav>
+        <a href="/product/new">Novo Produto</a>
+        <a href="/storage/new">Novo Armazém</a>
+        <a href="/category/new">Nova Categoria</a>
+      </nav>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Preço</th>
-          <th>Armazém</th>
-          <th>Categoria</th>
-          <th>Quantidade</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        <tr>
-          <td>{{ product.nome }}</td>
-          <td>{{ product.preco }}</td>
-          <td>{{ product.armazem }}</td>
-          <td>{{ product.categoria }}</td>
-          <td>{{ product.quantidade }}</td>
-          <td><a href="/product/{{product._id}}/delete">Excluir</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      <section class="filter-section">
+        <form action="/" method="GET">
+          <input type="text" name="quantity" placeholder="Quantidade" />
+          <select id="filter" name="filter" required>
+            <option value="lesser">Menor que</option>
+            <option value="greater">Maior que</option>
+          </select>
+          <button type="submit">Filtrar</button>
+        </form>
+        <form action="/" method="GET">
+          <button type="submit">Limpar Filtro</button>
+        </form>
+      </section>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Armazém</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{ product.nome }}</td>
+            <td>{{ product.preco }}</td>
+            <td>{{ product.armazem }}</td>
+            <td>{{ product.categoria }}</td>
+            <td>{{ product.quantidade }}</td>
+            <td><a href="/product/{{product._id}}/delete">Excluir</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

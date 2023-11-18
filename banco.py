@@ -75,21 +75,19 @@ class Connection():
     
 
     # METODOS DESTINADOS A TABLE PRODUTO
-    def filter_by_quantity_greater_than(self, quantidade : int) -> list:
-        all_data = self.get_produto()
+    def filter_by_quantity_greater_than(self, products: list, quantidade : int) -> list:
 
-        filter_func = lambda data: True if data['quantidade'] >= quantidade else "False"
+        filter_func = lambda data: True if data['quantidade'] >= quantidade else False
 
-        filtered_list = filter(filter_func, all_data)
+        filtered_list = filter(filter_func, products)
 
         return list(filtered_list)
 
-    def filter_by_quantity_lesser_than(self, quantidade: int) -> list:
-        all_data = self.get_produto()
+    def filter_by_quantity_lesser_than(self, products: list, quantidade: int) -> list:
 
         recursive_filter = lambda data_list: list(filter(lambda data: isinstance(data.get("quantidade"), int) and data["quantidade"] <= quantidade, data_list)) + list(map(lambda data: recursive_filter(data["dado_aninhado"]), filter(lambda data: isinstance(data.get("dado_aninhado"), list), data_list)))
 
-        filtered_list = recursive_filter(all_data)
+        filtered_list = recursive_filter(products)
 
         return filtered_list
     
