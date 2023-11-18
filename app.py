@@ -1,3 +1,5 @@
+from functools import wraps
+
 from bson.objectid import ObjectId
 from flask import Flask, redirect, render_template, request, session, url_for
 
@@ -8,16 +10,22 @@ connection = Connection()
 app = Flask(__name__)
 app.secret_key = "xmqwoidmwqo"  
 
-@app.route('/', methods=['GET'])
-def index():
-    isLoggedIn = 'username' in session
-    
-    if isLoggedIn:
-        products = connection.get_produto()
-        
-        return render_template('index.html', username=session['username'], products=products)
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        isLoggedIn = 'username' in session
+        if not isLoggedIn:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
-    return redirect(url_for('login'))
+@app.route('/', methods=['GET'])
+@login_required
+def index():
+    products = connection.get_produto()
+        
+    return render_template('index.html', username=session['username'], products=products)
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -43,11 +51,13 @@ def login():
     return render_template('login.html')
 
 @app.route('/logout', methods=['GET'])
+@login_required
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
 @app.route('/product/new', methods=['POST', 'GET'])
+@login_required
 def add():
     if request.method == 'POST':
         new_produto = {
@@ -64,11 +74,13 @@ def add():
     return render_template('new_product.html', categories=connection.get_categoria(), storages=connection.get_armazem())
 
 @app.route('/product/<id>/delete', methods=['GET'])
+@login_required
 def delete(id):
     connection.delete_produto(id)
     return redirect(url_for('index'))
 
 @app.route('/category/new', methods=['POST', 'GET'])
+@login_required
 def add_category():
     if request.method == 'POST':
         new_categoria = {
@@ -81,6 +93,7 @@ def add_category():
     return render_template('new_category.html')
 
 @app.route('/storage/new', methods=['POST', 'GET'])
+@login_required
 def add_storage():
     if request.method == 'POST':
         new_armazem = {
