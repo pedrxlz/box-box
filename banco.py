@@ -53,6 +53,10 @@ class Connection():
         
         return response_builder
     
+    def get_produto_by_id(self, id) -> list:
+        response = self.db['produto'].find_one({'_id': ObjectId(id)})
+        return response
+    
     def get_usuario(self) -> list:
         response = self.db['usuario'].find()
         response_builder = [ data for data in response ]
@@ -66,7 +70,9 @@ class Connection():
         else:
             return "Falha ao adicionar o produto"
     def delete_produto(self, id):
-        result = self.db['produto'].delete_one({'_id': ObjectId(id)})
+        product = self.get_produto_by_id(id)
+        
+        result = product and self.db['produto'].delete_one({'_id': ObjectId(id)}) 
         
         if result.deleted_count:
             return f"O produto foi deletado com sucesso"
