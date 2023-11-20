@@ -55,7 +55,18 @@ class Connection():
     
     def get_produto_by_id(self, id) -> list:
         response = self.db['produto'].find_one({'_id': ObjectId(id)})
+        
+        response['armazem'] = self.get_armazem_by_id(response['armazem'])['nome']
+        response['categoria'] = self.get_categoria_by_id(response['categoria'])['nome']
+
         return response
+    
+    def update_produto(self, id, produto):
+        result = self.db['produto'].update_one({'_id': ObjectId(id)}, {'$set': produto})
+        if result.modified_count:
+            return f"O produto foi atualizado com sucesso"
+        else:
+            return "Falha ao atualizar o produto"
     
     def get_usuario(self) -> list:
         response = self.db['usuario'].find()

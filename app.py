@@ -90,6 +90,22 @@ def delete(id):
     connection.delete_produto(id)
     return redirect(url_for('index'))
 
+@app.route('/product/<id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit(id):
+    if request.method == 'POST':
+        new_produto = {
+            'categoria': ObjectId(request.form['category']),
+            'nome': request.form['name'],
+            'preco': int(request.form['price']),
+            'quantidade': int(request.form['quantity']),
+        }
+        
+        connection.update_produto(id, new_produto)
+        
+        return redirect(url_for('index'))
+    return render_template('edit_product.html', product=connection.get_produto_by_id(id), categories=connection.get_categoria(), storages=connection.get_armazem())
+
 @app.route('/category/new', methods=['POST', 'GET'])
 @login_required
 def add_category():

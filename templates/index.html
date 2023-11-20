@@ -121,7 +121,10 @@
             <td>{{ product.armazem }}</td>
             <td>{{ product.categoria }}</td>
             <td>{{ product.quantidade }}</td>
-            <td><a href="/product/{{product._id}}/delete">Excluir</a></td>
+            <td>
+              <a href="/product/{{product._id}}/edit">Editar</a> /
+              <a href="/product/{{product._id}}/delete">Excluir</a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
