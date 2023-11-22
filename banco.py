@@ -8,9 +8,11 @@ class Connection():
         cluster = MongoClient("mongodb+srv://felipegaby:12345@cluster0.tet07xv.mongodb.net/")
         self.db = cluster['productsDB']
 
+    map_response = lambda self, response : [ data for data in response ]
+
     def get_armazem(self) -> list:
         response = self.db['armazem'].find()
-        response_builder = [ data for data in response ]
+        response_builder = self.map_response(response)
         return response_builder
     
     def get_armazem_by_id(self, id) -> list:
@@ -27,7 +29,7 @@ class Connection():
 
     def get_categoria(self) -> list:
         response = self.db['categoria'].find()
-        response_builder = [ data for data in response ]
+        response_builder = self.map_response(response)
         return response_builder
     
     def get_categoria_by_id(self, id) -> list:
@@ -45,7 +47,7 @@ class Connection():
     
     def get_produto(self) -> list:
         response = self.db['produto'].find()
-        response_builder = [ data for data in response ]
+        response_builder = self.map_response(response)
         
         for data in response_builder:
             data['armazem'] = self.get_armazem_by_id(data['armazem'])['nome']
@@ -70,7 +72,7 @@ class Connection():
     
     def get_usuario(self) -> list:
         response = self.db['usuario'].find()
-        response_builder = [ data for data in response ]
+        response_builder = self.map_response(response)
         return response_builder
     
     def post_produto(self, produto):
