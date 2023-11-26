@@ -9,46 +9,73 @@
         <title>Inserir produto</title>
         <style>
           body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 20px;
-          }
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #e9ecef;
+          margin: 0;
+          padding: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
 
           form {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          }
+          width: 100%;
+          max-width: 400px;
+          margin: auto;
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
           label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-          }
+          display: block;
+          margin-bottom: 5px;
+          color: #495057;
+          font-size: 16px;
+        }
 
-          input,
-          select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-          }
+          input, select {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 20px;
+          border: 1px solid #ced4da;
+          border-radius: 0.25rem;
+          box-sizing: border-box;
+          font-size: 16px;
+        }
 
           input[type="submit"] {
-            background-color: #afafaf;
-            color: white;
-            cursor: pointer;
-          }
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          transition: background-color 0.2s ease-in-out;
+        }
 
           input[type="submit"]:hover {
-            opacity: 0.8;
-          }
+          background-color: #0056b3;
+        }
+
+          input[type="number"] {
+          -moz-appearance: textfield; 
+        }
+
+          input[type="number"]::-webkit-inner-spin-button,
+          input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        
+          input:disabled {
+          background-color: #e9ecef;
+          color: #6c757d;
+        }
         </style>
       </head>
       <body>
