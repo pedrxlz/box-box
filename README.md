@@ -7,3 +7,5 @@ Requisitos:
 - Ao menos um dicionário dentro do escopo (no parâmetro, ou no retorno) de uma função lambda
 - Ao menos um entre os seguintes functores: map, filter, reduce
 - Ao menos um monad
+
+Documentação: https://docs.google.com/document/d/1OEkblvrmmgL1rpshXqgVaBGRaGKTZgJTE61yEgA25pY/edit?usp=sharing
